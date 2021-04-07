@@ -20,7 +20,7 @@ class SessionParameters:
     role = RoleParameters
     output_logs = None
 
-    def __init__(self, port, ip, connection_parameters, role, output_logs):
+    def __init__(self, ip, port, connection_parameters, role, output_logs):
         self.port = port
         self.ip = ip
         self.connectionParameters = connection_parameters
@@ -45,12 +45,12 @@ def parse_arguments():
     group_logs_flags.add_argument("-o", help="Output of logs to stdout",
                                   action="store_true")
     group_logs_flags.add_argument("-f", help="output of logs to file",
-                                  type=str)
+                                  type=str, default=None)
 
     args = parser.parse_args()
 
     type_connection = ConnectionParameters.UDP if args.u else ConnectionParameters.TCP
     role = RoleParameters.SERVER if args.s else RoleParameters.CLIENT
-    output_logs = sys.stdout if args.o else open(args.f, "w")
+    output_logs = args.f
 
     return SessionParameters(args.host, args.port, type_connection, role, output_logs)

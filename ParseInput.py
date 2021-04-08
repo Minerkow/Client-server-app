@@ -1,6 +1,5 @@
 import argparse
 import enum
-import sys
 
 
 class ConnectionParameters(enum.Enum):

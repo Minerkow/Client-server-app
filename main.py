@@ -16,10 +16,18 @@ if __name__ == '__main__':
                 ParseInput.ConnectionParameters.UDP):
             server = Server.UDPServer(session_parameters.port)
             server.start()
+        elif (session_parameters.connectionParameters ==
+                ParseInput.ConnectionParameters.TCP):
+            server = Server.TCPServer(session_parameters.port)
+            server.start()
     elif session_parameters.role == ParseInput.RoleParameters.CLIENT:
         if (session_parameters.connectionParameters ==
                 ParseInput.ConnectionParameters.UDP):
             client = Client.UDPClient(session_parameters.ip, session_parameters.port)
+            client.start()
+        elif (session_parameters.connectionParameters ==
+                ParseInput.ConnectionParameters.TCP):
+            client = Client.TCPClient(session_parameters.ip, session_parameters.port)
             client.start()
 
 

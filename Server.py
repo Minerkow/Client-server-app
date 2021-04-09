@@ -32,14 +32,13 @@ class UDPServer(Server):
 
         while True:
             recv_message, client_address = self.server_socket.recvfrom(Server.BUF_SIZE)
-            str_client_address = client_address[0] + ':' + str(client_address[1])
-            logging.info(' UDPServer: Receive message from client with address: %s',
-                         str_client_address)
+            logging.info(' UDPServer: Receive message from client with ip: %s',
+                         client_address[0])
 
-            self.server_socket.sendto(bytes(str_client_address, 'UTF-8'),
+            self.server_socket.sendto(bytes(client_address[0], 'UTF-8'),
                                       client_address)
-            logging.info(' UDPServer: Send message to client with address: %s',
-                         str_client_address)
+            logging.info(' UDPServer: Send message to client with ip: %s',
+                         client_address[0])
 
 
 class TCPServer(Server):
@@ -57,27 +56,26 @@ class TCPServer(Server):
 
         while True:
             connection_socket, client_addr = self.server_socket.accept()
-            str_client_addr = client_addr[0] + ':' + str(client_addr[1])
-            logging.info(' TCPServer: Accept connection with address: %s',
-                         str_client_addr)
+            logging.info(' TCPServer: Accept connection with ip: %s',
+                         client_addr[0])
 
             try:
                 connection_socket.settimeout(2)
                 connection_socket.recv(Server.BUF_SIZE)
                 logging.info(' TCPServer: Receive msg from client '
-                             'with address: %s', str_client_addr)
+                             'with ip: %s', client_addr[0])
             except socket.timeout:
                 logging.error(' TCPServer: Message from client not received '
-                              'with address %s, disconnection', str_client_addr)
+                              'with ip %s, disconnection', client_addr[0])
                 connection_socket.close()
-                logging.info(' TCPServer: Close connection with address: %s',
-                             str_client_addr)
+                logging.info(' TCPServer: Close connection with ip: %s',
+                             client_addr[0])
                 continue
 
-            connection_socket.send(bytes(str_client_addr, 'UTF-8'))
-            logging.info(' TCPServer: Send msg to client with address: %s',
-                         str_client_addr)
+            connection_socket.send(bytes(client_addr[0], 'UTF-8'))
+            logging.info(' TCPServer: Send msg to client with ip: %s',
+                         client_addr[0])
 
             connection_socket.close()
-            logging.info(' TCPServer: Close connection with address: %s',
-                         str_client_addr)
+            logging.info(' TCPServer: Close connection with ip: %s',
+                         client_addr[0])

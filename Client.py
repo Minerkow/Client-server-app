@@ -30,7 +30,6 @@ class UDPClient(Client):
         super().__init__(server_ip, server_port)
 
     def start(self):
-        str_server_addr = self.server_ip + ':' + str(self.server_port)
 
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         logging.info(' UDPClient: Client socket open')
@@ -38,13 +37,13 @@ class UDPClient(Client):
         hello_msg = bytes('Hello', 'UTF-8')
         self.client_socket.sendto(hello_msg, (self.server_ip, self.server_port))
         logging.info(' UDPClient: Sending message to server '
-                     'with address: %s', str_server_addr)
+                     'with ip: %s', self.server_ip)
 
         try:
             self.client_socket.settimeout(UDPClient.TIME_OUT)
             recv_message, server_address = self.client_socket.recvfrom(Client.BUF_SIZE)
             logging.info(' UDPClient: Received reply message from the server '
-                         'with address: %s', str_server_addr)
+                         'with ip: %s', self.server_ip)
             print(str(recv_message, 'UTF-8'))
         except socket.timeout:
             logging.error(' UDPClient: No response from the server has been '
@@ -59,7 +58,6 @@ class TCPClient(Client):
         super().__init__(server_ip, server_port)
 
     def start(self):
-        str_server_addr = self.server_ip + ':' + str(self.server_port)
 
         try:
             self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -69,17 +67,17 @@ class TCPClient(Client):
             self.client_socket.close()
             return
 
-        logging.info(' TCPClient: Connect to server with address: %s',
-                     str_server_addr)
+        logging.info(' TCPClient: Connect to server with ip: %s',
+                     self.server_ip)
 
         hello_msg = bytes('Hello', 'UTF-8')
         self.client_socket.send(hello_msg)
         logging.info(' TCPClient: Sending a message to server '
-                     'with address: %s', str_server_addr)
+                     'with ip: %s', self.server_ip)
 
         recv_msg = self.client_socket.recv(Client.BUF_SIZE)
         logging.info(' TCPClient: Received a reply message from the server '
-                     'with address: %s', str_server_addr)
+                     'with ip: %s', self.server_ip)
         print(str(recv_msg, 'UTF-8'))
 
         self.client_socket.close()

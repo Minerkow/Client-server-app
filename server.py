@@ -1,3 +1,5 @@
+"""Server Classes and Methods"""
+
 import logging
 import socket
 
@@ -21,9 +23,7 @@ class Server(ABC):
 
 
 class UDPServer(Server):
-
-    def __init__(self, server_port):
-        super().__init__(server_port)
+    """Server conforming to UDP protocol"""
 
     def start(self):
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -44,10 +44,8 @@ class UDPServer(Server):
 
 
 class TCPServer(Server):
+    """Server conforming to TCP protocol"""
     TIME_OUT = 2
-
-    def __init__(self, server_port):
-        super().__init__(server_port)
 
     def start(self):
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

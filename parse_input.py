@@ -1,18 +1,25 @@
+"""
+Functions and classes for processing and saving parameters of
+current session
+"""
 import argparse
 import enum
 
 
 class ConnectionParameters(enum.Enum):
+    """Connection parameters, possible connection protocols"""
     TCP = 1
     UDP = 2
 
 
 class RoleParameters(enum.Enum):
+    """Role parameters"""
     CLIENT = 1
     SERVER = 2
 
 
 class SessionParameters:
+    """Current session parameters"""
     port = int
     ip = str
     connection_parameters = ConnectionParameters
@@ -22,12 +29,13 @@ class SessionParameters:
     def __init__(self, ip, port, connection_parameters, role, output_logs):
         self.port = port
         self.ip = ip
-        self.connectionParameters = connection_parameters
+        self.connection_parameters = connection_parameters
         self.role = role
         self.output_logs = output_logs
 
 
 def parse_arguments():
+    """Parsing command line arguments for subtleties call with the -h flag"""
     parser = argparse.ArgumentParser("Connection Argument Parser")
     group_connection_flags = parser.add_mutually_exclusive_group(required=False)
     group_logs_flags = parser.add_mutually_exclusive_group(required=True)

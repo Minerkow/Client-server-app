@@ -1,3 +1,5 @@
+"""Client Classes and Methods"""
+
 import socket
 import logging
 
@@ -24,13 +26,10 @@ class Client(ABC):
 
 
 class UDPClient(Client):
+    """Client requesting UDP"""
     TIME_OUT = 2
 
-    def __init__(self, server_ip, server_port):
-        super().__init__(server_ip, server_port)
-
     def start(self):
-
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         logging.info(' UDPClient: Client socket open')
 
@@ -54,11 +53,9 @@ class UDPClient(Client):
 
 
 class TCPClient(Client):
-    def __init__(self, server_ip, server_port):
-        super().__init__(server_ip, server_port)
+    """Client requesting TCP"""
 
     def start(self):
-
         try:
             self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.client_socket.connect((self.server_ip, self.server_port))

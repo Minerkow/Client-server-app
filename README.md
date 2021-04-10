@@ -1,10 +1,10 @@
 # Client-server-app
 Simple client-server application by Melnikov Ignat
 
-##File info
+###### File info
 kbm.py - file for submitting the assignment, all classes, methods and functions in one application
 
-##Arguments
+###### Arguments
 ~~~~
  Connection and log saving parameters [-h] [-s] [-t | -u] (-o | -f F)
                                        

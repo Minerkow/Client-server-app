@@ -36,7 +36,7 @@ class SessionParameters:
 
 def parse_arguments():
     """Parsing command line arguments for subtleties call with the -h flag"""
-    parser = argparse.ArgumentParser("Connection Argument Parser")
+    parser = argparse.ArgumentParser("Connection and log saving parameters")
     group_connection_flags = parser.add_mutually_exclusive_group(required=False)
     group_logs_flags = parser.add_mutually_exclusive_group(required=True)
 
@@ -51,7 +51,7 @@ def parse_arguments():
 
     group_logs_flags.add_argument("-o", help="Output of logs to stdout",
                                   action="store_true")
-    group_logs_flags.add_argument("-f", help="output of logs to file",
+    group_logs_flags.add_argument("-f", help="Output of logs to file",
                                   type=str, default=None)
 
     args = parser.parse_args()

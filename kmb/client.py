@@ -11,9 +11,9 @@ class Client(ABC):
 
     BUF_SIZE = 2048
 
-    server_ip = str
-    server_port = int
-    client_socket = socket
+    server_ip = 'localhost'
+    server_port = 12000
+    client_socket = None
 
     def __init__(self, server_ip, server_port):
         self.server_ip = server_ip

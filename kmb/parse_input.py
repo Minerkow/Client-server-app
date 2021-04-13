@@ -5,6 +5,8 @@ current session
 import argparse
 import enum
 
+from dataclasses import dataclass
+
 
 class ConnectionParameters(enum.Enum):
     """Connection parameters, possible connection protocols"""
@@ -18,20 +20,14 @@ class RoleParameters(enum.Enum):
     SERVER = 2
 
 
+@dataclass
 class SessionParameters:
     """Current session parameters"""
-    port = int
-    ip = str
-    connection_parameters = ConnectionParameters
-    role = RoleParameters
-    output_logs = None
-
-    def __init__(self, ip, port, connection_parameters, role, output_logs):
-        self.port = port
-        self.ip = ip
-        self.connection_parameters = connection_parameters
-        self.role = role
-        self.output_logs = output_logs
+    port: int
+    ip: str
+    connection_parameters: ConnectionParameters
+    role: RoleParameters
+    output_logs: str
 
 
 def parse_arguments():
@@ -42,12 +38,12 @@ def parse_arguments():
 
     parser.add_argument("host", help="Server ip address", type=str)
     parser.add_argument("port", help="Port for connection", type=int)
-    parser.add_argument("-s", help="Start Server", action="store_true")
-    parser.set_defaults(s=False)
+    parser.add_argument("-s", help="Start Server", action="store_true", default=False)
 
-    group_connection_flags.add_argument("-t", help="TCP mode", action="store_true")
-    group_connection_flags.add_argument("-u", help="UDP mode", action="store_true")
-    group_connection_flags.set_defaults(t=True, u=False)
+    group_connection_flags.add_argument("-t", help="TCP mode", action="store_true",
+                                        default=True)
+    group_connection_flags.add_argument("-u", help="UDP mode", action="store_true",
+                                        default=False)
 
     group_logs_flags.add_argument("-o", help="Output of logs to stdout",
                                   action="store_true")
@@ -60,4 +56,4 @@ def parse_arguments():
     role = RoleParameters.SERVER if args.s else RoleParameters.CLIENT
     output_logs = args.f
 
-    return SessionParameters(args.host, args.port, type_connection, role, output_logs)
+    return SessionParameters(args.port, args.host, type_connection, role, output_logs)

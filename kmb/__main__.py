@@ -7,9 +7,7 @@ call with the -h flag
 """
 import logging
 
-import parse_input
-import server
-import client
+from kmb import parse_input, server, client
 
 if __name__ == '__main__':
     session_parameters = parse_input.parse_arguments()
@@ -21,11 +19,13 @@ if __name__ == '__main__':
     if session_parameters.role == parse_input.RoleParameters.SERVER:
         if (session_parameters.connection_parameters ==
                 parse_input.ConnectionParameters.UDP):
-            server = server.UDPServer(session_parameters.port)
+            server = server.UDPServer(session_parameters.port,
+                                      session_parameters.ip)
             server.start()
         elif (session_parameters.connection_parameters ==
               parse_input.ConnectionParameters.TCP):
-            server = server.TCPServer(session_parameters.port)
+            server = server.TCPServer(session_parameters.port,
+                                      session_parameters.ip)
             server.start()
     elif session_parameters.role == parse_input.RoleParameters.CLIENT:
         if (session_parameters.connection_parameters ==

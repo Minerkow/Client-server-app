@@ -1,8 +1,9 @@
 # Client-server-app
 Simple client-server application by Melnikov Ignat
 
-###### File info
-kbm.py - file for submitting the assignment, all classes, methods and functions in one application
+###### Start
+
+python -m kmb <flags> 
 
 ###### Arguments
 ~~~~
